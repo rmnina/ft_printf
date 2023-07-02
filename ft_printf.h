@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libftprintf.h                                      :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdufour <jdufour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jovicu <jovicu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 22:30:33 by jdufour           #+#    #+#             */
-/*   Updated: 2023/05/02 23:25:45 by jdufour          ###   ########.fr       */
+/*   Updated: 2023/07/03 01:51:04 by jovicu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
 # include <unistd.h>
 # include <stdarg.h>
@@ -23,7 +23,7 @@ int	ft_putnbr(int n);
 int	ft_putunsigned(unsigned int n);
 int	ft_put_hex(unsigned int n, char c);
 int	ft_putadr(unsigned long n);
-int	ft_printf(char *prout, ...);
-int	choose_format(char *prout, va_list grosprouts);
+int	ft_printf(char *format, ...);
+int	choose_format(char *format, va_list args);
 
 #endif

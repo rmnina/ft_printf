@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdufour <jdufour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jovicu <jovicu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 00:02:47 by jdufour           #+#    #+#             */
-/*   Updated: 2023/05/02 23:17:34 by jdufour          ###   ########.fr       */
+/*   Updated: 2023/07/03 01:54:01 by jovicu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 int	ft_putadr(unsigned long n)
 {
@@ -29,51 +29,56 @@ int	ft_putadr(unsigned long n)
 	return (size);
 }
 
-int	choose_format(char *prout, va_list grosprouts)
+int	choose_format(char *format, va_list args)
 {
 	int	size;
 
 	size = 0;
-	if (*prout == 'd' || *prout == 'i')
-		size = ft_putnbr(va_arg(grosprouts, int));
-	if (*prout == 'u')
-		size = ft_putunsigned(va_arg(grosprouts, unsigned int));
-	if (*prout == 's')
-		size = ft_putstr(va_arg(grosprouts, char *));
-	if (*prout == 'c')
-		size = ft_putchar(va_arg(grosprouts, int));
-	if (*prout == '%')
+	if (*format == 'd' || *format == 'i')
+		size = ft_putnbr(va_arg(args, int));
+	if (*format == 'u')
+		size = ft_putunsigned(va_arg(args, unsigned int));
+	if (*format == 's')
+		size = ft_putstr(va_arg(args, char *));
+	if (*format == 'c')
+		size = ft_putchar(va_arg(args, int));
+	if (*format == '%')
 		size = ft_putchar('%');
-	if (*prout == 'x' || *prout == 'X')
-		size = ft_put_hex(va_arg(grosprouts, unsigned int), *prout);
-	if (*prout == 'p')
+	if (*format == 'x' || *format == 'X')
+		size = ft_put_hex(va_arg(args, unsigned int), *format);
+	if (*format == 'p')
 	{
 		size = ft_putstr("0x");
-		size += ft_putadr(va_arg(grosprouts, unsigned long));
+		size += ft_putadr(va_arg(args, unsigned long));
 	}
 	return (size);
 }
 
-int	ft_printf(char *prout, ...)
+int	ft_printf(char *format, ...)
 {
 	int		value;
-	va_list	grosprouts;
+	va_list	args;
 
-	va_start(grosprouts, prout);
 	value = 0;
-	while (*prout)
+	va_start(args, format);
+	if (format[value] == '%' && format[value + 1] == '\0')
+		return (0);
+	while (*format)
 	{
-		if (*prout == '%')
+		if (*format == '%')
 		{
-			prout++;
-			value += choose_format(prout++, grosprouts);
+			format++;
+			value += choose_format(format++, args);
 		}
 		else
 		{
-			ft_putchar(*prout);
+			ft_putchar(*format);
 			value++;
-			prout++;
+			format++;
 		}
+		if (*format == '\0')
+			break;
 	}
+	va_end(args);
 	return (value);
 }
