@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jovicu <jovicu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jdufour <jdufour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 00:02:47 by jdufour           #+#    #+#             */
-/*   Updated: 2023/07/03 01:54:01 by jovicu           ###   ########.fr       */
+/*   Updated: 2023/07/03 02:51:14 by jdufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,24 @@ int	ft_putadr(unsigned long n)
 
 	hex = "0123456789abcdef";
 	size = 0;
-	if (n < 16)
-		size += ft_putchar(hex[n]);
-	else if (n > 15)
+
+	if (!n)
 	{
+		size = ft_putstr("(nil)");
+		return (size);
+	}
+	if (n > 15)
 		size += ft_putadr(n / 16);
-		size += ft_putadr(n % 16);
-	}	
+	n = n % 16;
+	size++;
+	ft_putchar(hex[n]);
 	return (size);
 }
 
 int	choose_format(char *format, va_list args)
 {
-	int	size;
+	int		size;
+	unsigned long	p;
 
 	size = 0;
 	if (*format == 'd' || *format == 'i')
@@ -48,8 +53,10 @@ int	choose_format(char *format, va_list args)
 		size = ft_put_hex(va_arg(args, unsigned int), *format);
 	if (*format == 'p')
 	{
-		size = ft_putstr("0x");
-		size += ft_putadr(va_arg(args, unsigned long));
+		p = va_arg(args, unsigned long);
+		if (p != 0)
+			size = ft_putstr("0x");
+		size += ft_putadr(p);
 	}
 	return (size);
 }
@@ -62,7 +69,7 @@ int	ft_printf(char *format, ...)
 	value = 0;
 	va_start(args, format);
 	if (format[value] == '%' && format[value + 1] == '\0')
-		return (0);
+		return (-1);
 	while (*format)
 	{
 		if (*format == '%')
@@ -76,8 +83,6 @@ int	ft_printf(char *format, ...)
 			value++;
 			format++;
 		}
-		if (*format == '\0')
-			break;
 	}
 	va_end(args);
 	return (value);
