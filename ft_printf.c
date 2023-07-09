@@ -6,7 +6,7 @@
 /*   By: jdufour <jdufour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 00:02:47 by jdufour           #+#    #+#             */
-/*   Updated: 2023/07/03 02:51:14 by jdufour          ###   ########.fr       */
+/*   Updated: 2023/07/09 23:03:31 by jdufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,14 @@ int	ft_printf(char *format, ...)
 	}
 	va_end(args);
 	return (value);
+}
+
+int	main ()
+{
+	char	*buffer = NULL;
+	printf("printf addr = %p\n", buffer);
+	ft_printf("ftprintf addr = %p\n", buffer);	
+	int i = ft_printf("yo\n");
+	ft_printf("%d\n", i);
+	return (0);
 }

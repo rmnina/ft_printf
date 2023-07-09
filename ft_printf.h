@@ -6,12 +6,18 @@
 /*   By: jdufour <jdufour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 22:30:33 by jdufour           #+#    #+#             */
-/*   Updated: 2023/07/03 02:51:20 by jdufour          ###   ########.fr       */
+/*   Updated: 2023/07/09 22:57:54 by jdufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
+
+# if defined (APPLE)
+#  define PTR_NULL "0x0"
+# elif linux
+#  define PTR_NULL "(nil)"
+# endif
 
 # include <unistd.h>
 # include <stdarg.h>
