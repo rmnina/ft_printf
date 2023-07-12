@@ -68,7 +68,7 @@ int	ft_printf(char *format, ...)
 
 	value = 0;
 	va_start(args, format);
-	if (format[value] == '%' && format[value + 1] == '\0')
+	if (!format)
 		return (-1);
 	while (*format)
 	{
